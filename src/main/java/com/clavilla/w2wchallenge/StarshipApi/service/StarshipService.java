@@ -6,6 +6,8 @@ import com.clavilla.w2wchallenge.StarshipApi.model.dto.StarshipRequestDto;
 import com.clavilla.w2wchallenge.StarshipApi.model.dto.StarshipResponseDto;
 import com.clavilla.w2wchallenge.StarshipApi.model.entity.Starship;
 import com.clavilla.w2wchallenge.StarshipApi.repository.StarshipRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -26,9 +28,9 @@ public class StarshipService {
 
     @NonNull
     @Transactional(readOnly = true)
-    public List<StarshipResponseDto> findAll() {
-        List<Starship> starshipList = starshipRepository.findAll();
-        return starshipMapper.convertToListDto(starshipList);
+    public Page<StarshipResponseDto> findAll(Pageable pageable) {
+        Page<Starship> starshipPage = starshipRepository.findAll(pageable);
+        return starshipMapper.convertToPagetDto(starshipPage);
     }
 
     @NonNull

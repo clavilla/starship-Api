@@ -4,6 +4,7 @@ import com.clavilla.w2wchallenge.StarshipApi.model.dto.StarshipRequestDto;
 import com.clavilla.w2wchallenge.StarshipApi.model.dto.StarshipResponseDto;
 import com.clavilla.w2wchallenge.StarshipApi.model.entity.Starship;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -27,5 +28,9 @@ public class StarshipMapper {
 
     public List<StarshipResponseDto> convertToListDto(List<Starship> starshipList) {
         return starshipList.stream().map(this::convertToDto).toList();
+    }
+
+    public Page<StarshipResponseDto> convertToPagetDto(Page<Starship> starshipPage) {
+        return starshipPage.map(this::convertToDto);
     }
 }

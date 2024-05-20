@@ -3,6 +3,8 @@ package com.clavilla.w2wchallenge.StarshipApi.controller;
 import com.clavilla.w2wchallenge.StarshipApi.model.dto.StarshipRequestDto;
 import com.clavilla.w2wchallenge.StarshipApi.model.dto.StarshipResponseDto;
 import com.clavilla.w2wchallenge.StarshipApi.service.StarshipService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,8 +23,10 @@ public class StarshipController {
     }
 
     @GetMapping("/getAllStarships")
-    public ResponseEntity<List<StarshipResponseDto>> getAllStarships() {
-        List<StarshipResponseDto> starships = starshipService.findAll();
+    public ResponseEntity<Page<StarshipResponseDto>> getAllStarships(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Page<StarshipResponseDto> starships = starshipService.findAll(PageRequest.of(page, size));
         return new ResponseEntity<>(starships, HttpStatus.OK);
     }
 
