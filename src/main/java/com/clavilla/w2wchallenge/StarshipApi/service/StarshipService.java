@@ -37,7 +37,7 @@ public class StarshipService {
     @Transactional(readOnly = true)
     public StarshipResponseDto findById(@NonNull Long id) {
         Starship starship = starshipRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Starship not found with id: " + id));
+                .orElseThrow(ResourceNotFoundException::new);
         return starshipMapper.convertToDto(starship);
     }
 
@@ -58,7 +58,7 @@ public class StarshipService {
     @Transactional
     public StarshipResponseDto update(Long id, StarshipRequestDto starshipRequestDto) {
         Starship starship = starshipRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Starship not found with id: " + id));
+                .orElseThrow(ResourceNotFoundException::new);
         starship.setName(starshipRequestDto.getName());
         starship.setModel(starshipRequestDto.getModel());
         starship.setStarshipClass(starshipRequestDto.getStarshipClass());
