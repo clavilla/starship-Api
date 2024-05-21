@@ -17,6 +17,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -55,7 +56,11 @@ public class StarshipService {
     public List<StarshipResponseDto> findByNameContainingIgnoreCase(String name) {
         List<Starship> starshipList = starshipRepository.findByNameContainingIgnoreCase(name);
         log.info("{} starships obtained from data base", starshipList.size());
-        return starshipMapper.convertToListDto(starshipList);
+        if (!starshipList.isEmpty()) {
+            return starshipMapper.convertToListDto(starshipList);
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     @Transactional
