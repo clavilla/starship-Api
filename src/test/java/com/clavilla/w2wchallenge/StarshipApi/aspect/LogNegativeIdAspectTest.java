@@ -43,16 +43,23 @@ public class LogNegativeIdAspectTest {
 
     @Test
     public void testLogIfNegativeId_withNegativeId_logsWarning() {
-        // Simula un ID negativo
+
         logNegativeIdAspect.logIfNegativeId(joinPoint, -1L);
 
-        // Verifica que el mensaje específico se haya logueado
         verify(mockAppender, times(1)).doAppend(captorLoggingEvent.capture());
         ILoggingEvent loggedEvent = captorLoggingEvent.getValue();
 
         assertTrue(loggedEvent.getLevel().equals(Level.WARN) &&
                         loggedEvent.getFormattedMessage().contains("Attempted to access a starship with a negative ID: -1"),
                 "Expected warning message not logged");
+    }
+
+    @Test
+    public void testLogIfNegativeId_withNonNegativeId_noWarningLogged() {
+
+        logNegativeIdAspect.logIfNegativeId(joinPoint, 1L);
+
+        verify(mockAppender, times(0)).doAppend(captorLoggingEvent.capture());
     }
 
 }

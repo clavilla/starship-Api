@@ -6,7 +6,6 @@ import com.clavilla.w2wchallenge.StarshipApi.model.dto.StarshipRequestDto;
 import com.clavilla.w2wchallenge.StarshipApi.model.dto.StarshipResponseDto;
 import com.clavilla.w2wchallenge.StarshipApi.model.entity.Starship;
 import com.clavilla.w2wchallenge.StarshipApi.repository.StarshipRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -15,14 +14,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
 @Service
-@Slf4j
 public class StarshipService {
+
+    private static final Logger log = LoggerFactory.getLogger(StarshipService.class);
 
     private final StarshipRepository starshipRepository;
     private final StarshipMapper starshipMapper;
